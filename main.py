@@ -1,17 +1,5 @@
 import os
 
-os.system("cls")
-print(os.getcwd())
-
-print("=" * 45)
-print("      WORKOUT TRACKER")
-print("=" * 45)
-print("1. Add a new workout")
-print("2. View workout profiles")
-print("3. Show Progress")
-print("4. Exit")
-
-option = int(input("Please select an option from the list above: "))
 
 def findworkout(workout_name):
     found = False
@@ -81,33 +69,64 @@ def show_progress(workout):
         print(f"Latest weight: {last_weight}")
         print(f"Max weight: {max_weight}")
         print(f"Weight change: {last_weight - first_weight}")
-        
-if (option == 1):
-    print("Valid option selected, enter the values to add a new workout")
-    date = input("Please enter the date of the workout (YYYY-MM-DD): ")
-    workout_name = input("Please enter the name of the workout you are adding: ")
-    muscle_group = input("Please enter the muscle group targeted: ")
-    sets = int(input("Please enter the number of sets: "))
-    reps = int(input("Please enter the number of reps: "))
-    weight = float(input("Please enter the weight used: "))
-    addworkout (date, workout_name, muscle_group, sets, reps, weight)
-    print("-" * 45)
-    print(f"The workout {workout_name} targeting {muscle_group} with {sets} sets of {reps} reps at {weight} weight has been added.")
-    print("-" * 45)
 
-if (option == 2): 
-    workout = input("Please enter the name of the workout you want to view: ")
-    findworkout (workout)
+def menu():
+    while True:
+        os.system("cls")
+        print(os.getcwd())
 
-if (option == 3):
-    workout = input("Please enter the name of the workout you want to view your progress for: ")
-    show_progress(workout)
-    
-    
+        print("=" * 45)
+        print("      WORKOUT TRACKER")
+        print("=" * 45)
+        print("1. Add a new workout")
+        print("2. View workout profiles")
+        print("3. Show Progress")
+        print("4. Exit")
+
+        option = int(input("Please select an option from the list above: "))
+
+        if option == 1:
+            print("Valid option selected, enter the values to add a new workout")
+            date = input("Please enter the date of the workout (YYYY-MM-DD): ")
+            workout_name = input("Please enter the name of the workout you are adding: ")
+            muscle_group = input("Please enter the muscle group targeted: ")
+            sets = int(input("Please enter the number of sets: "))
+            reps = int(input("Please enter the number of reps: "))
+            weight = float(input("Please enter the weight used: "))
+
+            addworkout(date, workout_name, muscle_group, sets, reps, weight)
+
+            print("-" * 45)
+            print(f"The workout {workout_name} targeting {muscle_group} with {sets} sets of {reps} reps at {weight} weight has been added.")
+            print("-" * 45)
+
+            input("\nPress Enter to return to menu...")
+
+        elif option == 2:
+            if os.path.exists("workout_data.csv"):
+                workout = input("Please enter the name of the workout you want to view: ")
+                findworkout(workout)
+            else:
+                print("Not found, please add a workout first.")
+
+            input("\nPress Enter to return to menu...")
+
+        elif option == 3:
+            if os.path.exists("workout_data.csv"):
+                workout = input("Please enter the name of the workout you want to view your progress for: ")
+                show_progress(workout)
+            else:
+                print("Not found, please add a workout first.")
+
+            input("\nPress Enter to return to menu...")
+
+        elif option == 4:
+            print("Exiting the program.")
+            break
+
+        else:
+            print("Invalid option")
+            input("\nPress Enter to return to menu...")
 
 
-if (option == 4):
-    print("Exiting the program.")
-    exit()
-
-
+menu()
